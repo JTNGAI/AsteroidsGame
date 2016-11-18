@@ -34,8 +34,6 @@ public void draw()
   background(0);
   bob.move();
   bob.show();
-  //sue.move();
-  //sue.show();
 
   for (int i=0; i<1000; i++)
   {
@@ -45,6 +43,8 @@ public void draw()
   {
     asteroids.get(i).move();
     asteroids.get(i).show();
+  if ((dist(bob.getX(), bob.getY(), asteroids.get(i).getX(), asteroids.get(i).getY()) < 20))  
+ asteroids.remove(i);
 
  }
  
@@ -86,22 +86,29 @@ class Asteroids extends Floater
   private int rotSpeed;
   public Asteroids()
  {
- corners = 6;
+ corners = 9;
 xCorners = new int[corners];
 yCorners = new int[corners];
-xCorners[0] = -11;
-yCorners[0] = -8;
-xCorners[1] = 7;
-yCorners[1] = -8;
-xCorners[2] = 13;
-yCorners[2] = 0;
-xCorners[3] = 6;
-yCorners[3] = 10;
-xCorners[4] = -11;
-yCorners[4] = 8;
-xCorners[5] = -5;
-yCorners[5] = 0;
-myColor = color(156, 156, 156, 100);
+xCorners[0] =0;
+yCorners[0] = -23;
+xCorners[1] = -5;
+yCorners[1] = -12;
+xCorners[2] = -9;
+yCorners[2] = -9;
+xCorners[3] = -11;
+yCorners[3] = -6;
+xCorners[4] = -9;
+yCorners[4] = 6;
+xCorners[5] = -4;
+yCorners[5] = 8;
+xCorners[6] = 5;
+yCorners[6] = 8;
+xCorners[7] = 4;
+yCorners[7] = -5;
+xCorners[8] = 6;
+yCorners[8] = -10;
+
+myColor = color(156, 156, 156);
 myCenterX = 0;
 myCenterY = Math.random()*height;
 myDirectionX = (Math.random()*3)-1.5;
@@ -109,7 +116,23 @@ myDirectionY = (Math.random()*3)-1.5;
 myPointDirection = Math.random()*360;
 rotSpeed = ((int)(Math.random()*5)-3);
  }
- 
+  public void show ()  //Draws the floater at the current position  
+  {             
+    noFill();   
+    stroke(myColor);    
+    //convert degrees to radians for sin and cos         
+    double dRadians = myPointDirection*(Math.PI/180);                 
+    int xRotatedTranslated, yRotatedTranslated;    
+    beginShape();         
+    for (int nI = 0; nI < corners; nI++)    
+    {     
+      //rotate and translate the coordinates of the floater using current direction 
+      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
+      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
+      vertex(xRotatedTranslated, yRotatedTranslated);
+    }   
+    endShape(CLOSE);
+  } 
  
 public void move()
  {
