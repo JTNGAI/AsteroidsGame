@@ -3,6 +3,7 @@ SpaceShip bob;
 Star [] stars;
 //Asteroids [] lotsAsteroids;
 ArrayList <Asteroids> asteroids;
+ArrayList<Bullet> bullets;
 
 public void setup() 
 {
@@ -21,6 +22,8 @@ public void setup()
   {
     asteroids.add(new Asteroids());
   }
+ bullets= new ArrayList <Bullet>();
+  
   /* lotsAsteroids= new Asteroids[40];
   for (int i = 0; i<40; i++)
   {
@@ -40,14 +43,26 @@ public void draw()
     stars[i].show();
   }
   for (int i=0; i<asteroids.size(); i++)
-  {
+ {
     asteroids.get(i).move();
     asteroids.get(i).show();
-  if ((dist(bob.getX(), bob.getY(), asteroids.get(i).getX(), asteroids.get(i).getY()) < 20))  
+ }
+  for (int i=0; i<bullets.size(); i++)
+ {
+    bullets.get(i).move();
+    bullets.get(i).show();
+ }
+  
+ for (int j=0; j<bullets.size(); j++)
+ {
+  for (int i=0; i<asteroids.size(); i++)
+  {
+  if ((dist(bullets.get(j).getX(), bullets.get(j).getY(), asteroids.get(i).getX(), asteroids.get(i).getY()) < 20))  
  asteroids.remove(i);
-
  }
  
+ }
+
 /*  for (int i = 0; i<40; i++)
   {
     lotsAsteroids[i].show();
@@ -79,6 +94,11 @@ public void draw()
     bob.hyperspace();
       
     }
+    if (key=='q')
+    {
+    bullets.add(new Bullet(bob));
+    }
+   
 }
 
 class Asteroids extends Floater
