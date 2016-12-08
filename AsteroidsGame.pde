@@ -37,39 +37,45 @@ public void draw()
   background(0);
   bob.move();
   bob.show();
-
-  for (int i=0; i<1000; i++)
-  {
-    stars[i].show();
-  }
-  for (int i=0; i<asteroids.size(); i++)
- {
-    asteroids.get(i).move();
-    asteroids.get(i).show();
- }
-  for (int i=0; i<bullets.size(); i++)
- {
-    bullets.get(i).move();
-    bullets.get(i).show();
- }
-  
- for (int j=0; j<bullets.size(); j++)
- {
-  for (int i=0; i<asteroids.size(); i++)
-  {
-  if ((dist(bullets.get(j).getX(), bullets.get(j).getY(), asteroids.get(i).getX(), asteroids.get(i).getY()) < 20))  
- asteroids.remove(i);
- }
- 
- }
-
-/*  for (int i = 0; i<40; i++)
+  /*  for (int i = 0; i<40; i++)
   {
     lotsAsteroids[i].show();
     lotsAsteroids[i].move();
   } */
 
-} 
+  for (int i=0; i<1000; i++)
+  {
+    stars[i].show();
+  }
+ 
+for(int c = 0; c < asteroids.size(); c++)
+  {
+    asteroids.get(c).show();
+    asteroids.get(c).move();
+    if(dist(asteroids.get(c).getX(), asteroids.get(c).getY(), bob.getX(), bob.getY()) <= 20)
+    {
+      asteroids.remove(c);
+    }
+  }
+  for(int a = 1; a < bullets.size(); a++)
+  {
+    bullets.get(a).show();
+    bullets.get(a).move();
+  }
+  for(int i = 1; i < asteroids.size(); i++)
+  {
+    for(int j = 0; j < bullets.size(); j++)
+    {
+      if(dist((float)asteroids.get(j).getX(), (float)bullets.get(j).getY(), (float)asteroids.get(i).getX(), (float)asteroids.get(i).getY()) < 20)
+      {
+        bullets.remove(j);
+        asteroids.remove(i);
+        break;
+      }
+    }
+  }
+}
+
    public void keyPressed()
    {
      if (keyCode == UP) 
